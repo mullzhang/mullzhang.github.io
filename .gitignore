@@ -1,9 +1,3 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/javascript
-# Edit at https://www.toptal.com/developers/gitignore?templates=javascript
-
-#!! ERROR: javascript is undefined. Use list command to see defined gitignore types !!#
-
-# End of https://www.toptal.com/developers/gitignore/api/javascript
-
 .cache
+public
+package-lock.json
