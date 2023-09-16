@@ -22,7 +22,7 @@
   </a>
 </p>
 
-Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting. Using the Gatsby Theme [`@lekoarts/gatsby-theme-minimal-blog`](https://github.com/LekoArts/gatsby-themes/tree/master/themes/gatsby-theme-minimal-blog).
+Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting. Using the Gatsby Theme [`@lekoarts/gatsby-theme-minimal-blog`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-minimal-blog).
 
 [**Demo Website**](https://minimal-blog.lekoarts.de)
 
@@ -35,30 +35,31 @@ Also be sure to check out other [Free & Open Source Gatsby Themes](https://theme
 - Light Mode / Dark Mode
 - Typography driven, minimal style
 - Tags/Categories support
-- Code highlighting with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) and [react-live](https://github.com/FormidableLabs/react-live) support. Also allows adding line numbers, line highlighting, language tabs, and file titles.
+- Code highlighting with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer). Also allows adding line numbers, line highlighting, language tabs, and file titles.
 - RSS Feed for blog posts
 - SEO (Sitemap, OpenGraph tags, Twitter tags)
 - WebApp Manifest
 
-## 🚀 Getting Started
+## ⏱️ Quick Start
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/LekoArts/gatsby-starter-minimal-blog)
+Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
+
+[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/LekoArts/gatsby-starter-minimal-blog)
+
+## 🚀 Getting Started
 
 ### 1. **Create a Gatsby site.**
 
-Use `git` to clone the site and navigate into it:
+Use the Gatsby CLI to clone the site and install dependencies:
 
 ```sh
-git clone https://github.com/LekoArts/gatsby-starter-minimal-blog project-name
-cd project-name
+npx gatsby new gatsby-starter-minimal-blog https://github.com/LekoArts/gatsby-starter-minimal-blog
 ```
 
-### 2. **Install dependencies.**
-
-If you use npm 7 or above use the `--legacy-peer-deps` flag. If you use npm 6 you can use `npm install`.
+### 2. **Navigate to your new project.**
 
 ```sh
-npm install --legacy-peer-deps
+cd gatsby-starter-minimal-blog
 ```
 
 ### 3. **Open the code and start customizing!**
@@ -73,13 +74,13 @@ If you want to learn more about how you can use a Gatsby starter that is configu
 
 **Important Note:** Please read the guide [Shadowing in Gatsby Themes](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/) to understand how to customize the underlying theme!
 
-This starter creates a new Gatsby site that installs and configures the theme [`@lekoarts/gatsby-theme-minimal-blog`](https://github.com/LekoArts/gatsby-themes/tree/master/themes/gatsby-theme-minimal-blog).
+This starter creates a new Gatsby site that installs and configures the theme [`@lekoarts/gatsby-theme-minimal-blog`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-minimal-blog).
 
 Have a look at the theme's README and files to see what options are available and how you can shadow the various components including Theme UI. Generally speaking you will want to place your files into `src/@lekoarts/gatsby-theme-minimal-blog/` to shadow/override files. The Theme UI config can be configured by shadowing its files in `src/gatsby-plugin-theme-ui/`.
 
 ### Code Highlighting
 
-Since the underlying theme ships with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) and [react-live](https://github.com/FormidableLabs/react-live) certain additional features were added to code blocks. You can find an overview / usage example in the [example repository](https://github.com/LekoArts/gatsby-themes/tree/master/examples/minimal-blog/content/posts/fantastic-beasts-and-where-to-find-them/index.mdx)! If you want to change certain code styles or add additional language tabs, you need to shadow the file `src/@lekoarts/gatsby-theme-minimal-blog/styles/code.js`.
+Since the underlying theme ships with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) certain additional features were added to code blocks. You can find an overview / usage example in the [example repository](https://github.com/LekoArts/gatsby-themes/tree/main/examples/minimal-blog/content/posts/fantastic-beasts-and-where-to-find-them/index.mdx)! If you want to change certain code styles or add additional language tabs, you need to shadow the file `src/@lekoarts/gatsby-theme-minimal-blog/styles/code.js`.
 
 **Language tabs:**
 
@@ -96,7 +97,7 @@ When you add a language (such as e.g. `js` or `javascript`) to the code block, a
 You can display a title (e.g. the file path) above the code block.
 
 ````
-```jsx:title=your-title
+```jsx title=your-title
 // code goes here
 ```
 ````
@@ -104,7 +105,7 @@ You can display a title (e.g. the file path) above the code block.
 Or without a specific language:
 
 ````
-```:title=your-title
+```none title=your-title
 // code goes here
 ```
 ````
@@ -114,7 +115,7 @@ Or without a specific language:
 You can highlight single or multiple (or both) lines in a code block. You need to add a language.
 
 ````
-```js {2,4-5}
+```js highlight=2,4-5
 const test = 3
 const foo = 'bar'
 const harry = 'potter'
@@ -123,26 +124,13 @@ const ron = 'weasley'
 ```
 ````
 
-**Hide line numbers:**
+**Show line numbers:**
 
-If you want to hide line numbers you can either globally disable them (see Theme options) or on a block-by-block basis. You can also combine that with the other attributes.
+If you want to show line numbers you can either globally enable them (see theme options) or on a block-by-block basis. You can also combine that with the other attributes.
 
 ````
-```noLineNumbers
+```js withLineNumbers
 // code goes here
-```
-````
-
-**react-live:**
-
-Add `react-live` to the code block (and render the component) to see a preview below it.
-
-````
-```js react-live
-const onClick = () => {
-  alert("You opened me");
-};
-render(<button onClick={onClick}>Alohomora!</button>);
 ```
 ````
 
@@ -200,62 +188,21 @@ defer: false
 ---
 ```
 
-#### Changing the "Hero" text
+### Changing the "Hero" text
 
 To edit the hero text ("Hi, I'm Lupin...), create a file at `src/@lekoarts/gatsby-theme-minimal-blog/texts/hero.mdx` to edit the text.
 
-#### Changing the "Projects" part
+### Changing the "Projects" part
 
 To edit the projects part below "Latest posts", create a file at `src/@lekoarts/gatsby-theme-minimal-blog/texts/bottom.mdx` to edit the contents.
 
-### Changing your fonts
+### Extending the footer of the post
 
-By default, the underlying theme and thus this starter uses "IBM Plex Sans" as its font. It's used throughout the site and set as a `font-family` on the `html` element.
-
-If you want to change your default font or add any additional fonts, you'll need to change two things:
-
-1. The configuration for `gatsby-omni-font-loader` => Responsible for loading the font CSS files
-1. The Theme UI config and its `fonts` key (see [Theme UI Typography Docs](https://theme-ui.com/theming#typography)) => Responsible for setting the `font-family` in the example
-
-After adjusting the configuration for `gatsby-omni-font-loader` you'll need to shadow the theme's Theme UI config and overwrite the `fonts` key. For the sake of this explanation it's assumed that you replaced "IBM Plex Sans" with "Roboto Mono".
-
-Create a file at `src/gatsby-plugin-theme-ui/index.js` with the following contents:
-
-```js
-import { merge } from "theme-ui";
-import originalTheme from "@lekoarts/gatsby-theme-minimal-blog/src/gatsby-plugin-theme-ui/index";
-
-const theme = merge(originalTheme, {
-  fonts: {
-    body: `"Roboto Mono", monospace`,
-  },
-});
-
-export default theme;
-```
-
-As defined in the [Theme Specification](https://theme-ui.com/theme-spec#typography) `body` is the default body font family.
-
-**Another example:** You didn't replace "IBM Plex Sans" but added "Roboto Mono" additionally since you want to use it for your headings.
-
-Then you'd not overwrite `body` but add a `heading` key:
-
-```js
-import { merge } from "theme-ui";
-import originalTheme from "@lekoarts/gatsby-theme-minimal-blog/src/gatsby-plugin-theme-ui/index";
-
-const theme = merge(originalTheme, {
-  fonts: {
-    heading: `"Roboto Mono", monospace`,
-  },
-});
-
-export default theme;
-```
+Inside the [`<Post />` component](https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-minimal-blog/src/components/post.tsx) there's also a `<PostFooter />` component that you can shadow to display elements between the end of the post and the global footer. By default it returns `null`. Create a file at `src/@lekoarts/gatsby-theme-minimal-blog/components/post-footer.jsx` to edit this section. The `<PostFooter />` component receives the complete `post` prop that `<Post />` also receives.
 
 ### Change your `static` folder
 
-The `static` folder contains the icons, social media images and `robots.txt`. Don't forget to change these files, too!
+The `static` folder contains the icons, social media images and `robots.txt`. Don't forget to change these files, too! You can use [Real Favicon Generator](https://realfavicongenerator.net/) to generate the image files inside `static`.
 
 ## 🤔 Questions or problems?
 
@@ -279,4 +226,4 @@ To learn more about Gatsby themes specifically, I recommend checking out the [th
 
 Thanks for using this project! I'm always interested in seeing what people do with my projects, so don't hesitate to tag me on [Twitter](https://twitter.com/lekoarts_de) and share the project with me.
 
-Please star this project, share it on Social Media or consider supporting me on [Patreon](https://www.patreon.com/lekoarts) or [GitHub Sponsor](https://github.com/sponsors/LekoArts)!
+Please star this project, share it on Social Media or consider supporting me on [GitHub Sponsors](https://github.com/sponsors/LekoArts)!

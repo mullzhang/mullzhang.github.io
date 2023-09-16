@@ -1,15 +1,23 @@
-require(`dotenv`).config()
+import type { GatsbyConfig, PluginRef } from "gatsby"
+import "dotenv/config"
 
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
-module.exports = {
+const config: GatsbyConfig = {
   siteMetadata: {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
-    // See all options: https://github.com/LekoArts/gatsby-themes/blob/master/themes/gatsby-theme-minimal-blog/gatsby-config.js
+    // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-minimal-blog/gatsby-config.mjs
     siteTitle: `mullzhang's page`,
     siteTitleAlt: `mullzhang's page`,
+    siteHeadline: `mullzhang's page`,
+    siteUrl: `https://mullzhang.github.io`,
+    siteDescription: `This page aims to introduce myself`,
+    siteImage: `/banner.jpg`,
+    siteLanguage: `en`,
+    author: `@lekoarts_de`,
   },
+  trailingSlash: `always`,
   plugins: [
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
@@ -31,34 +39,26 @@ module.exports = {
             url: `https://twitter.com/mullzhang`,
           },
           {
-            name: `Github`,
+            name: `GitHub`,
             url: `https://github.com/mullzhang`,
           },
           {
             name: `Notes`,
             url: `https://mullzhang.github.io/notes/`,
           },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-omni-font-loader`,
-      options: {
-        enableListener: true,
-        preconnect: [`https://fonts.gstatic.com`],
-        interval: 300,
-        timeout: 30000,
-        // If you plan on changing the font you'll also need to adjust the Theme UI config to edit the CSS
-        // See: https://github.com/LekoArts/gatsby-themes/tree/master/examples/minimal-blog#changing-your-fonts
-        web: [
           {
-            name: `IBM Plex Sans`,
-            file: `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap`,
+            name: `Survey`,
+            url: `https://mullzhang.github.io/survey/`,
           },
         ],
       },
     },
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: `/`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -102,7 +102,11 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allPost } }) =>
+            serialize: ({
+              query: { site, allPost },
+            }: {
+              query: { allPost: IAllPost; site: { siteMetadata: ISiteMetadata } }
+            }) =>
               allPost.nodes.map((post) => {
                 const url = site.siteMetadata.siteUrl + post.slug
                 const content = `<p>${post.excerpt}</p><div style="margin-top: 50px; font-style: italic;"><strong><a href="${url}">Keep reading</a>.</strong></div><br /> <br />`
@@ -116,32 +120,67 @@ module.exports = {
                   custom_elements: [{ "content:encoded": content }],
                 }
               }),
-            query: `
-              {
-                allPost(sort: { fields: date, order: DESC }) {
-                  nodes {
-                    title
-                    date(formatString: "MMMM D, YYYY")
-                    excerpt
-                    slug
-                  }
-                }
-              }
-            `,
+            query: `{
+  allPost(sort: {date: DESC}) {
+    nodes {
+      title
+      date(formatString: "MMMM D, YYYY")
+      excerpt
+      slug
+    }
+  }
+}`,
             output: `rss.xml`,
             title: `Minimal Blog - @lekoarts/gatsby-theme-minimal-blog`,
           },
         ],
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
+    // You can remove this plugin if you don't need it
     shouldAnalyseBundle && {
-      resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
+      resolve: `gatsby-plugin-webpack-statoscope`,
       options: {
-        analyzerMode: `static`,
-        reportFilename: `_bundle.html`,
-        openAnalyzer: false,
+        saveReportTo: `${__dirname}/public/.statoscope/_bundle.html`,
+        saveStatsTo: `${__dirname}/public/.statoscope/_stats.json`,
+        open: false,
       },
     },
-  ].filter(Boolean),
+  ].filter(Boolean) as Array<PluginRef>,
+}
+
+export default config
+
+interface IPostTag {
+  name: string
+  slug: string
+}
+
+interface IPost {
+  slug: string
+  title: string
+  defer: boolean
+  date: string
+  excerpt: string
+  contentFilePath: string
+  html: string
+  timeToRead: number
+  wordCount: number
+  tags: Array<IPostTag>
+  banner: any
+  description: string
+  canonicalUrl: string
+}
+
+interface IAllPost {
+  nodes: Array<IPost>
+}
+
+interface ISiteMetadata {
+  siteTitle: string
+  siteTitleAlt: string
+  siteHeadline: string
+  siteUrl: string
+  siteDescription: string
+  siteImage: string
+  author: string
 }
